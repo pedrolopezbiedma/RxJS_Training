@@ -1,0 +1,45 @@
+<hr>
+<h3>Exercises</h3>
+<h2>Exercise 1: Capitalize an array of villain names.</h2>
+<ul>
+    <li *ngFor="let normalizedVillain of normalizedVillains">
+        {{ normalizedVillain }}
+    </li>
+</ul>
+<button (click)="runExercise1()">Run Exercise 1</button>
+<ul>
+    <li *ngFor="let capitalizedVillain of capitalizedVillains$ | async as list">
+        {{ capitalizedVillain }}
+    </li>
+</ul>
+<hr>
+<h2>Exercise 2: Aggregate the numbers within an array of items.</h2>
+<ul>
+    <li *ngFor="let mixedItem of mixedItems">
+        {{ mixedItem }}
+    </li>
+</ul>
+<button (click)="runExercise2()">Run Exercise 2</button>
+<p>Aggregate from array is: {{ arrayAggregate }}</p>
+<hr>
+<h2>Exercise 3: Same random number twice.</h2>
+<hr>
+<h2>Exercise 4: Countdown with interval.</h2>
+<label for="countdownStart">Countdown Start:  </label>
+<input #countdownStartInput name='countdownStart' type="number">
+<br>
+<button (click)="runExercise4()">Run Exercise 4</button>
+<p>{{ countdown$ | async }}</p>
+<p></p>
+<hr>
+<h2>Exercise 5: Combine observables output.</h2>
+<p> Observable 1 is: [a,b,c,d,e] </p>
+<p> Observable 2 is: [1,2,3,4,5]</p>
+<p> Observable 3 is an interval until 4</p>
+<button (click)="runExercise5()">Run Exercise 5</button>
+<p>{{ combinedObservable$ | async }}</p>
+<hr>
+<h2>Exercise 6: Luke Skywalker</h2>
+<button (click)="runExercise6()">Run Exercise 6</button>
+<p> {{ starWarsDroneSpecie | json }}</p>
+<hr>

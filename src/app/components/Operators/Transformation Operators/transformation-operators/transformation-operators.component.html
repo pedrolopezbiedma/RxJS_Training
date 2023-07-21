@@ -1,0 +1,37 @@
+<hr>
+<h3>Transformation Operators</h3>
+<label for="mergeAllInput">Merge All Example: </label>
+<input #mergeAllInput name='mergeAllInput' type="text">
+<br>
+<ol>
+    <li *ngFor="let mergeAllGithubUser of mergeAllGithubUsers$ | async as list">
+        {{mergeAllGithubUser.login }}
+        <a href="{{mergeAllGithubUser.html_url }}">Pincha Aqui</a>
+    </li>
+</ol>
+<br>
+<label for="mergeMapInput">Merge Map Example: </label>
+<input #mergeMapInput name='mergeMapInput' type="text">
+<br>
+<ol>
+    <li *ngFor="let mergeMapGithubUser of mergeMapGithubUsers$ | async as list">
+        {{mergeMapGithubUser.login }}
+        <a href="{{mergeMapGithubUser.html_url }}">Pincha Aqui</a>
+    </li>
+</ol>
+<br>
+<button #mergeMapButton>MergeMap button ( Hold it to count )</button>
+<br>
+<br>
+<label for="switchMapInput">Switch Map Example: </label>
+<input #switchMapInput name='switchMapInput' type="text">
+<br>
+<br>
+<button #concatMapButton>Concat Button ( Click to create a 3 numbers interval )</button>
+<br>
+<br>
+<button #exhaustMapButton>Exhaust Map Button ( Click to create a 3 numbers interval )</button>
+<br>
+<br>
+<span>Check the Developer console for more outputs</span>
+<hr>

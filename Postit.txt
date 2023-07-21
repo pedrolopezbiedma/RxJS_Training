@@ -1,0 +1,85 @@
+***** Observable Creation *****
+
+    - of(val1, val2, ...) --> Creara un observable que emitirá los valores proporcionados.
+
+    - from(array) --> Creara un observable que hara una emision por cada uno de los elementos del array.
+
+    - fromEvent(eventTriggerer, 'eventToHearFrom') --> Crea un observable que escuchará a eventToHearFrom y emitirá cada vez que haya un evento.
+
+    - range(inicio, fin) --> Creara un observable que emitirá un rango de numeros de inicio a fin.
+
+*****Basic Operators *****
+
+    - map(value => value transformado) --> Nos permite transformar lo que entre en el operador a lo que queramos.
+
+    - filter(value => condicion) --> Permite pasar las emitiones que cumplan con la condicion.
+
+    - tap() --> Permite hacer un console.log dentro del stream del observable.
+
+    - reduce((acum, iter) => funcion) --> Nos permite ir acumulando lo que el observable tenga y proporcionada el valor una vez se haya completado el observable.
+
+    - scan((acum, iter) => function) --> Igual que el reduce, pero va proporcionando el acumulado en cada emision que se procese.
+
+***** Not Common Operators *****
+
+    - take(x) --> Coge las primeras x emisiones de un observable y lo completa.
+
+    - first(predicate) --> Coge la primera emision del observable. Se puede filtrar metiendo una funcion como predicate. Una vez emite, se completa.
+
+    - takeWhile(predicate, inclusive?) --> Emite emisiones del observable mientras que la condicion del predicate sea true.
+        Si inclusive = true, entonces la emision con la que se rompe el takeWhile ( la ultima ) tambien se emite.
+
+    - takeUntil( finisherObservable$ ) --> Emite emisiones del observable hasta que finisher observable emite
+
+    - skip(x) --> Ignora las x primeras emisiones del observable
+
+    - distinct( keySelector ) --> Emite los valores sin repeticiones de un array. Para objetos no vale demasiado si no le ponemos un keySelector
+
+    - distinctUntilChanged ( previous, current ) --> Emite lo valores del observable que no sean igual al previamente emitido.
+        Si estamos usando objetos, necesitamos definir el comportamiento usando previous y current.
+
+    - distinctUntilKeyChanged ('key' ) --> Emite valores de observable que no sean igual al previamente emitido basandose en la key para comprobar si es igual.
+
+***** Time Operators *****
+
+    - debounceTime ( time ) --> Retrasa la emision de un observable por 'time' cantidad de tiempo. Normalmente, se combina con distinctUntilChange ( o similares ) para mejorar aun mas el no mandar emisiones con los mismos valores ( por si acaso, escribimos y borramos en un input por ejemplo )
+
+    - throttleTime ( time, asyncScheduler, config?: {leading: ? , trailing }) --> Coge la primera emision de un observable e ignora las demas emisiones hasta que pase el 'time'. Una vez pasado, emite la siguiente tambien y vuelve a hacer lo mismo. Se puede configurar para que tambien emita la ultima emision dentro del tiempo de omision con el objeto config ( o que omita la primera, etc... )
+
+    - sampleTime ( time ) --> Va haciendo emisiones del observable sobre el que funciona en intervalos de 'time'. Si el valor del observable no se ha actualizado desde la última emisión, no emite nada.
+
+    - sample( observable$ ) --> Emtie un valor del observable al que esta afectando cuando 'Observable$' emita un valor
+
+    - auditTime( time ) --> Ignora al observable durante los ultimos 'time' segundos. Despues, emite el ultimo valor del observable.
+
+    - toArray () --> Aguanta las emisiones de un observable hasta que se completa, y entonces crea una emision de lo que tiene aguantado como un array
+
+***** Transformation Operators *****
+
+    - mergeAll --> Recibe como input un Observable y lo que hace es subscribirse a el y proporcionar la respuesta.
+
+    - mergeMap --> Ejecuta el observable que tiene dentro y se subscribe a el y proporciona el resultado
+
+    - switchMap --> Si se recibe otra emision, se cancela la anterior
+
+    - concatMap --> Si se recibe una emision nueva, se guarda en una cola, y se concatena a cuando termina la que hay en curso.
+
+    - exhaustMap --> Si se recibe una emision nueva, se ignora si hay alguna en curso ya.
+
+***** Combination Operators *****
+
+    - startWith() & endWith() --> Hace que se introduzca una emision en el stream del observable al inicio / fin.
+
+    - concat( obs1, obs2, obs3 ) --> concatena las emisiones de los observables incluidos en la funcion.
+
+    - merge ( obs1, obs2 ) --> Junta las emisiones de 2 observables en 1 solo
+
+    - combineLatest({ alias1: obs1, alias2: obs2 }) --> Empieza a emitir una vez que los 2 observables han emitido al menos un valor.
+        En ese caso, emitira un array con [val del obser1 y val del obser2]. Una vez ha pasado eso, cada vez que uno de los observbales emite 1 valor, emite un array con el ultimo valor emitido de cada uno de los observables.
+
+    - zip({ alias1: obs1, alias2: obs2 }) --> Emite cada vez que todos los observables introducidos han emitido el mismo numero de veces,
+        por ejemplo, emite 1 vez cuando todos los observables han emiteido 1 vez.
+        entonces emite un array con esos valores.
+
+    - forkJoin( {alias1: obs1, alias2: obs2} ) -> Emitira un array con la ultima emision de cada uno de los operadores una vez todos se completen.
+        Si no se completan, no dara ninguna salida. Si uno de los observables de dentro da un pete y no catcheamos la excepcion, la salida sera esa excepcion.
